@@ -1,24 +1,29 @@
 {
   "name": "after-ready",
   "version": "1.0.0",
-  "description": "after-ready",
+  "description": "TC39 decorators for making classes to support one-time ready event callback handlers.",
   "main": "src/index.js",
   "scripts": {
     "build:cjs": "babel src --out-dir lib",
     "test": "nyc ava --timeout=10s",
     "test-no-report": "NODE_DEBUG=after-ready nyc ava --timeout=10s --verbose",
     "lint": "eslint .",
-    "posttest": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "posttest": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "prepublishOnly": "npm run build:cjs"
   },
   "files": [
-    "src/"
+    "src/",
+    "lib/"
   ],
   "repository": {
     "type": "git",
     "url": "git://github.com/kaelzhang/after-ready.git"
   },
   "keywords": [
-    "after-ready"
+    "after-ready",
+    "decorators",
+    "tc39-decorators",
+    "ready"
   ],
   "engines": {
     "node": ">= 6"
