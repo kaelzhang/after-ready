@@ -91,7 +91,7 @@ Reset the ready status, or reset the error status.
 
 ## `@awaitReady`
 
-The method applied which this decorator will always returns a `Promise`.
+The method which applied this decorator will always returns a `Promise`.
 
 If `this[SET_READY]()` has been invoked, the original method will be executed immediately.
 
