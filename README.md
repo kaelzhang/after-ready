@@ -17,7 +17,7 @@
 
 [TC39 decorators](https://github.com/tc39/proposal-decorators) for making things to support one-time ready event callback handlers.
 
-By using `after-ready`, a babel plugin [`@babel/plugin-proposal-decorators`](https://babeljs.io/docs/en/babel-plugin-proposal-decorators) should be configured with `legacy: false` if the tc39 decorators are not supported natively.
+If using `after-ready`, a babel plugin [`@babel/plugin-proposal-decorators`](https://babeljs.io/docs/en/babel-plugin-proposal-decorators) should be configured with `legacy: false` if the tc39 decorators are not supported natively.
 
 ## Install
 

@@ -31,13 +31,13 @@ test('error: not setup', async t => {
   t.throws(() => foo.baz(), NOT_SETUP)
 })
 
-test.only('error: setup more than once', t => {
-  // t.throws(() => {
+test('error: setup more than once', t => {
+  t.throws(() => {
     @setup
     @setup
     class Foo {
     }
-  // }, NO_MORE_SETUP)
+  }, NO_MORE_SETUP)
 })
 
 test('mixed', async t => {

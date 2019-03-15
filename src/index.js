@@ -77,14 +77,13 @@ function setError (err) {
 const NOOP = () => {}
 
 const createSetupDecorator = (classDescriptor, onReady) => {
-  console.log(classDescriptor, onReady)
   const {elements, kind} = classDescriptor
 
   assert(kind === 'class', '@setup is a class decorator')
   assert(
     !elements.some(
       descriptor =>
-        descriptor.kind === 'method'
+        descriptor.kind === 'field'
         && descriptor.key === IS_READY
     ),
     '@setup has already been applied'
