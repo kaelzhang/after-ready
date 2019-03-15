@@ -7,6 +7,7 @@ const symbol = s => Symbol(`after-ready:${s}`)
 
 export const SET_READY = symbol('SET_READY')
 export const SET_ERROR = symbol('SET_ERROR')
+export const RESET_READY = symbol('RESET_READY')
 
 const READY_ERROR = symbol('READY_ERROR')
 const READY_CALLBACKS = symbol('READY_CALLBACKS')
@@ -74,6 +75,11 @@ function setError (err) {
   runCallbacks.call(this, err)
 }
 
+function resetReady () {
+  this[IS_READY] = false
+  this[READY_ERROR] = null
+}
+
 const NOOP = () => {}
 
 const createSetupDecorator = (classDescriptor, onReady) => {
@@ -103,6 +109,8 @@ const createSetupDecorator = (classDescriptor, onReady) => {
   // method ready
   const setReadyMethodDescriptor = createMethodDescriptor(SET_READY, setReady)
   const setErrorMethodDescriptor = createMethodDescriptor(SET_ERROR, setError)
+  const resetReadyMethodDescriptor = createMethodDescriptor(
+    RESET_READY, resetReady)
 
   return {
     kind,
@@ -113,7 +121,8 @@ const createSetupDecorator = (classDescriptor, onReady) => {
       readyCallbacksElementDescriptor,
       onReadyElementDescriptor,
       setReadyMethodDescriptor,
-      setErrorMethodDescriptor
+      setErrorMethodDescriptor,
+      resetReadyMethodDescriptor
     ]
   }
 }

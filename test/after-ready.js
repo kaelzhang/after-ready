@@ -4,7 +4,8 @@ import {
   awaitReady,
   whenReady,
   SET_READY,
-  SET_ERROR
+  SET_ERROR,
+  RESET_READY
 } from '../src'
 
 const NOT_SETUP = '@setup should be used first'
@@ -112,6 +113,10 @@ test('set error', async t => {
   }, message)
 
   await t.throwsAsync(() => foo.bar(), message)
+  foo[RESET_READY]()
+  foo[SET_READY]()
+
+  t.is(await foo.bar(), 1)
 })
 
 test('onReady', async t => {

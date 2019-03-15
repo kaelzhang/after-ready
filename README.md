@@ -30,21 +30,99 @@ $ npm i after-ready
 ```js
 import {
   setup,
-  afterReady,
-  whenReady,
-  SET_READY,
-  SET_ERROR
+  awaitReady,
+  SET_READY
 } from 'after-ready'
 
 @setup
 class Foo {
-  @afterReady
-  doSomething () {
+  constructor () {
+    this.init()
   }
 
+  // `doSomething` will not resolve before `this[SET_READY]()`
+  @awaitReady
+  doSomething () {
+    return 1
+  }
 
+  init () {
+    setTimeout(() => {
+      this[SET_READY]()
+    }, 500)
+  }
 }
 ```
+
+## @setup
+## @setup(onReady)
+
+- **onReady** `Function(err, ...args)` The function to be called when the instance of the class is set as ready or errored.
+
+Setup the class. A class must be setup with the `@setup` decorator then use the `@awaitReady` or `@whenReady`
+
+After the class is `@setup`d, **THREE** methods are added to the prototype of the class.
+
+### [SET_READY](...args)
+
+Set the class instance as ready.
+
+If `onReady` function is set, it will be invoked as `onReady.call(this, null, ...args)`.
+
+And the methods which applied with `@awaitReady` and have been called before ready will resume to execute.
+
+### [SET_ERROR](error)
+
+Set the class instance as error encountered.
+
+If `onReady` function is set, it will be invoked as `onReady.call(this, error)`.
+
+And the methods which applied with `@awaitReady` and have been called before ready will be rejected.
+
+### [RESET_READY]()
+
+Reset the ready status, or reset the error status.
+
+## @awaitReady
+
+The method applied which this decorator will always returns a `Promise`.
+
+If `this[SET_READY]()` has been invoked, the original method will be executed immediately.
+
+If `this[SET_ERROR](error)` has been invoked, then the method will returns `Promise.reject(error)`
+
+Otherwise, the original method will be paused, waiting for `this[SET_READY]()` or `this[SET_ERROR](error)` to be called.
+
+```js
+@setup
+class Foo {
+  constructor () {
+    this.init()
+  }
+
+  // `doSomething` will not resolve before `this[SET_READY]()`
+  @awaitReady
+  doSomething () {
+    return 1
+  }
+
+  init () {
+    setTimeout(() => {
+      this[SET_READY](new Error('Boooooom!!'))
+    }, 500)
+  }
+}
+
+new Foo().doSomething().then(n => {
+  console.log('the result is', n, 'but it will never reach here')
+}).catch(err => {
+  console.log(err.message, 'it will log "Boooooom!!"')
+})
+```
+
+## @whenReady
+
+If no `this[SET_READY]()` or `this[SET_ERROR](error)` has been called, the original method will never be invoked.
 
 ## License
 
