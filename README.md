@@ -55,10 +55,13 @@ class Foo {
     }, 500)
   }
 }
+
+const result = await new Foo().doSomething()
+console.log(result) // 1
 ```
 
-## @setup
-## @setup(onReady)
+## `@setup`
+## `@setup(onReady)`
 
 - **onReady** `Function(err, ...args)` The function to be called when the instance of the class is set as ready or errored.
 
@@ -66,7 +69,7 @@ Setup the class. A class must be setup with the `@setup` decorator then use the 
 
 After the class is `@setup`d, **THREE** methods are added to the prototype of the class.
 
-### [SET_READY](...args)
+### `[SET_READY](...args)`
 
 Set the class instance as ready.
 
@@ -74,7 +77,7 @@ If `onReady` function is set, it will be invoked as `onReady.call(this, null, ..
 
 And the methods which applied with `@awaitReady` and have been called before ready will resume to execute.
 
-### [SET_ERROR](error)
+### `[SET_ERROR](error)`
 
 Set the class instance as error encountered.
 
@@ -82,11 +85,11 @@ If `onReady` function is set, it will be invoked as `onReady.call(this, error)`.
 
 And the methods which applied with `@awaitReady` and have been called before ready will be rejected.
 
-### [RESET_READY]()
+### `[RESET_READY]()`
 
 Reset the ready status, or reset the error status.
 
-## @awaitReady
+## `@awaitReady`
 
 The method applied which this decorator will always returns a `Promise`.
 
@@ -123,7 +126,7 @@ new Foo().doSomething().then(n => {
 })
 ```
 
-## @whenReady
+## `@whenReady`
 
 If no `this[SET_READY]()` or `this[SET_ERROR](error)` has been called, the original method will never be invoked.
 
