@@ -31,7 +31,10 @@ $ npm i after-ready
 import {
   setup,
   awaitReady,
-  SET_READY
+  whenReady,
+  SET_READY,
+  SET_ERROR,
+  RESET_READY
 } from 'after-ready'
 
 @setup
