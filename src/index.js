@@ -14,10 +14,10 @@ const READY_CALLBACKS = symbol('READY_CALLBACKS')
 const IS_READY = symbol('IS_READY')
 const ON_READY = symbol('ON_READY')
 
-const createElementDescriptor = (key, value) => ({
+const createElementDescriptor = (key, value, placement = 'own') => ({
   kind: 'field',
   key,
-  placement: 'own',
+  placement,
   descriptor: {
     configurable: false,
     writable: true,
@@ -97,7 +97,8 @@ const createSetupDecorator = (classDescriptor, onReady) => {
   const readyCallbacksElementDescriptor = createElementDescriptor(
     READY_CALLBACKS, [])
   // own element ON_READY
-  const onReadyElementDescriptor = createElementDescriptor(ON_READY, onReady)
+  const onReadyElementDescriptor = createElementDescriptor(
+    ON_READY, onReady, 'prototype')
 
   // method ready
   const setReadyMethodDescriptor = createMethodDescriptor(SET_READY, setReady)
