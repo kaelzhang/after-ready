@@ -114,7 +114,7 @@ class Foo {
 
   init () {
     setTimeout(() => {
-      this[SET_READY](new Error('Boooooom!!'))
+      this[SET_ERROR](new Error('Boooooom!!'))
     }, 500)
   }
 }

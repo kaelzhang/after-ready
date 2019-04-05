@@ -1,6 +1,6 @@
 {
   "name": "after-ready",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "TC39 decorators for making classes to support one-time ready event callback handlers.",
   "module": "src/index.js",
   "main": "lib/index.js",
